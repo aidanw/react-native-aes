@@ -36,7 +36,8 @@
 + (NSString *) pbkdf2:(NSString *)password salt: (NSString *)salt cost: (NSInteger)cost length: (NSInteger)length {
     // Data of String to generate Hash key(hexa decimal string).
     NSData *passwordData = [password dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *saltData = [salt dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *saltData =   [[NSData alloc] initWithBase64EncodedString:salt options:0];
+
 
     // Hash key (hexa decimal) string data length.
     NSMutableData *hashKeyData = [NSMutableData dataWithLength:length];
@@ -94,7 +95,10 @@
 }
 
 + (NSString *) decrypt: (NSString *)cipherText key: (NSString *)key iv: (NSString *)iv {
-    NSData *result = [self AES128CBC:@"decrypt" data:[[NSData alloc] initWithBase64EncodedString:cipherText options:0] key:key iv:iv];
+NSData *IVd =[[NSData alloc] initWithBase64EncodedString:iv options:0];
+
+
+    NSData *result = [self AES128CBC:@"decrypt" data:[[NSData alloc] initWithBase64EncodedString:cipherText options:0] key:key iv:[self toHex:IVd]];
     return [[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding];
 }
 
