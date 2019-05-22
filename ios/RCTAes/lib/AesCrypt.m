@@ -40,7 +40,7 @@
 
 
     // Hash key (hexa decimal) string data length.
-    NSMutableData *hashKeyData = [NSMutableData dataWithLength:length];
+    NSMutableData *hashKeyData = [NSMutableData dataWithLength:length/8];
 
     // Key Derivation using PBKDF2 algorithm.
     int status = CCKeyDerivationPBKDF(
