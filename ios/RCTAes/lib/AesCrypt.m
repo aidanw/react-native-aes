@@ -90,7 +90,9 @@
 }
 
 + (NSString *) encrypt: (NSString *)clearText key: (NSString *)key iv: (NSString *)iv {
-    NSData *result = [self AES128CBC:@"encrypt" data:[clearText dataUsingEncoding:NSUTF8StringEncoding] key:key iv:iv];
+    NSData *IVd =[[NSData alloc] initWithBase64EncodedString:iv options:0];
+
+    NSData *result = [self AES128CBC:@"encrypt" data:[clearText dataUsingEncoding:NSUTF8StringEncoding] key:key iv:[self toHex:IVd]];
     return [result base64EncodedStringWithOptions:0];
 }
 
